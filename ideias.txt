@@ -1,0 +1,9 @@
+Circuito de Euler:
+
+É um circuito, um modo de andar no grafo de modo que não se repete nenhuma aresta, passa por todos as arestas apenas uma vez e se retorna ao nó inicial. Pode passar por um mesmo nó quando vezes forem necessárias
+
+Condição: 
+
+1º - Um grafo tem um circuito de euler se e somente se todos os vértices tem grau par, ou seja, o número de arestas em cada nó for par
+
+2º - O grafo precisa ser conexo (é um grafo não direcionado e que todos os nós são conectados por pelo menos uma aresta ao resto dos nós, sempre há um caminho para todo e qualquer nó)
