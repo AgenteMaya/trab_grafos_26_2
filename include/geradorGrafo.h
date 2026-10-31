@@ -1,3 +1,5 @@
+#pragma once
+
 #include <random>
 #include <vector>
 #include <memory>
@@ -13,6 +15,10 @@ public:
     GeradorGrafo(const GeradorGrafo&) = delete;
     GeradorGrafo& operator=(const GeradorGrafo&) = delete;
     GeradorGrafo(GeradorGrafo&&) = delete;
+
+    void setProbabilidade(double probabilidade);
+
+    double getProbabilidade();
 
 private:
 

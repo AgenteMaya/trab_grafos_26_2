@@ -30,3 +30,13 @@ std::vector<std::vector<int>> GeradorGrafo::gerarGrafo(int numVertices)
     }
     return matriz_adj;
 }
+
+void GeradorGrafo::setProbabilidade(double probabilidade)
+{
+    this->probabilidade = probabilidade;
+}
+
+double GeradorGrafo::getProbabilidade()
+{
+    return this->probabilidade;
+}
