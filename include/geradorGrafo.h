@@ -8,9 +8,9 @@ class GeradorGrafo
 {
 public:
 
-    static GeradorGrafo& instanciarGeradorGrafo(unsigned seed, double probabilidade);
+    GeradorGrafo(unsigned seed, double probabilidade);
 
-    std::vector<std::vector<int>> gerarGrafo(int numVertices);
+    std::vector<std::vector<int>> gerarGrafo(unsigned numVertices);
 
     GeradorGrafo(const GeradorGrafo&) = delete;
     GeradorGrafo& operator=(const GeradorGrafo&) = delete;
@@ -18,12 +18,9 @@ public:
 
     void setProbabilidade(double probabilidade);
 
-    double getProbabilidade();
+    double getProbabilidade() const;
 
 private:
-
-    GeradorGrafo(unsigned seed, double probabilidade);
     std::mt19937 _geradorSorteio;
     double _probabilidade;
-    inline static std::unique_ptr<GeradorGrafo> instance = nullptr;
 };

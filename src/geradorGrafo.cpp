@@ -1,19 +1,22 @@
-#include "include/geradorGrafo.h"
+#include "geradorGrafo.h"
 
-GeradorGrafo::GeradorGrafo(unsigned seed, double probabilidade) : _geradorSorteio(seed), _probabilidade(probabilidade)
-{}
+#include <stdexcept>
 
-GeradorGrafo& GeradorGrafo::instanciarGeradorGrafo(unsigned seed, double probabilidade)
+void validaProbabilidade(double probabilidade)
 {
-    if (instance == nullptr)
+    if (probabilidade < 0.0 || probabilidade > 1.0)
     {
-        instance = std::unique_ptr<GeradorGrafo>(new GeradorGrafo(seed, probabilidade));
+        throw std::invalid_argument("Probabilidade inválida, deve estar entre 0 e 1.");
     }
-    return *instance;
 }
 
+GeradorGrafo::GeradorGrafo(unsigned seed, double probabilidade) : _geradorSorteio(seed)
+{
+    validaProbabilidade(probabilidade);
+    _probabilidade = probabilidade;
+}
 
-std::vector<std::vector<int>> GeradorGrafo::gerarGrafo(int numVertices)
+std::vector<std::vector<int>> GeradorGrafo::gerarGrafo(unsigned numVertices)
 {
     std::uniform_real_distribution<double> dist(0.0, 1.0);
     std::vector<std::vector<int>> matriz_adj(numVertices, std::vector<int>(numVertices, 0));
@@ -33,10 +36,11 @@ std::vector<std::vector<int>> GeradorGrafo::gerarGrafo(int numVertices)
 
 void GeradorGrafo::setProbabilidade(double probabilidade)
 {
-    this->probabilidade = probabilidade;
+    validaProbabilidade(probabilidade);
+    _probabilidade = probabilidade;
 }
 
-double GeradorGrafo::getProbabilidade()
+double GeradorGrafo::getProbabilidade() const
 {
-    return this->probabilidade;
+    return _probabilidade;
 }
