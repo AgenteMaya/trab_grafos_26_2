@@ -1,4 +1,4 @@
-#include <std::vector>
+#include <vector>
 
 
 class Grafo
@@ -6,9 +6,9 @@ class Grafo
     // Atributos e métodos do grafo
 public:
 
-    void setMatrix(std::vector<std::vector<int>>&& matriz)
+    void setMatrix(std::vector<std::vector<int>>&& matriz);
 
-    const std::vector<std::vector<int>>& getMatrix() const
+    const std::vector<std::vector<int>>& getMatrix() const;
 
     unsigned graus();
 
@@ -17,8 +17,7 @@ public:
     Grafo circuitoEuleriano();
 
     bool eEuleriano();
-    
 
 private:
-    std::vector<std::vector<int>> matriz_adj; // Lista de adjacência para representar o grafo
-}
+    std::vector<std::vector<int>> _matriz_adj; // Lista de adjacência para representar o grafo
+};

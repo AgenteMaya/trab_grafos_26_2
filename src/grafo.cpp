@@ -1,22 +1,22 @@
-#include "include/grafo.h"
+#include "grafo.h"
 
-void setMatrix(std::vector<std::vector<int>>&& matriz)
+void Grafo::setMatrix(std::vector<std::vector<int>>&& matriz)
 {
-    matriz_adj = matriz;
+    _matriz_adj = matriz;
 }
 
-const std::vector<std::vector<int>>& getMatrix() const
+const std::vector<std::vector<int>>& Grafo::getMatrix() const
 {
-    return matriz_adj;
+    return _matriz_adj;
 }
 
-unsigned graus()
+unsigned Grafo::graus()
 {
-
+    return 0;
 }
 
-bool euleriano()
+bool Grafo::eEuleriano()
 {
-
+    return true; 
 }
 
