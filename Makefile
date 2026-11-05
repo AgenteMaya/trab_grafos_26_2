@@ -14,7 +14,7 @@ TEST_GRAFO = $(BIN_DIR)/grafo_teste
 
 .PHONY: all test clean
 
-all: $(TEST_GERADOR)
+all: $(TEST_GRAFO)
 
 # Criar diretórios
 $(OBJ_DIR) $(BIN_DIR):
@@ -34,7 +34,7 @@ $(TEST_GRAFO): test/grafo_teste.cpp $(OBJ) | $(BIN_DIR)
 
 # Executar os testes
 test: all
-	./$(TEST_GERADOR)
+	./$(TEST_GRAFO)
 
 # Limpar arquivos compilados
 clean:
