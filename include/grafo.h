@@ -18,19 +18,22 @@ public:
 
     const std::vector<std::vector<int>>& getMatrix() const;
 
-    void graus();
-
     bool temEuleriano();
 
     Grafo circuitoEuleriano();
-
-    bool eEuleriano();
 
     std::vector<int> getGraus() const;
 
     bool eConexo(bool ignorarIsolados = false);
 
+    std::vector<int> getCircuitoEuler();
+
+    bool validaEuleriano();
+
 private:
+
+    void graus();
+
     std::vector<std::vector<int>> _matriz_adj; // Matriz de adjacência para representar o grafo
 
     std::vector<int> _graus; //Vetor de graus dos vértices do grafo

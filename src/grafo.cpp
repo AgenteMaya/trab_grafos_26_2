@@ -1,10 +1,12 @@
 #include "grafo.h"
 #include <numeric>
 #include <queue>
+#include <stack>
 #include <set>
 #include <algorithm>
 
 #include <iostream>
+#include <vector>
 
 void Grafo::setMatrix(std::vector<std::vector<int>>&& matriz) 
 {
@@ -27,17 +29,10 @@ void Grafo::graus()
     }
 }
 
-bool Grafo::eEuleriano()
-{
-    return true; 
-}
-
 std::vector<int> Grafo::getGraus() const
 {
     return _graus;
 }
-
-
 
 bool Grafo::eConexo(bool ignorarIsolados)
 {
@@ -84,5 +79,101 @@ bool Grafo::eConexo(bool ignorarIsolados)
     return false; 
 }
 
+bool Grafo::temEuleriano()
+{
+    if (_matriz_adj.empty())
+        return true;
 
+    if (std::any_of(_graus.cbegin(), _graus.cend(), [](int i) { return i % 2 != 0; }) || !eConexo(true))
+        return false;
+
+    return true; 
+}
+
+std::vector<int> Grafo::getCircuitoEuler()
+{
+    std::vector<int> circuito;
+    if (_matriz_adj.empty() || !temEuleriano())
+        return circuito;
+
+    auto it = std::max_element(_graus.begin(), _graus.end());
+    int indAtual = std::distance(_graus.begin(), it);
+
+    auto matriz = _matriz_adj;
+    std::stack<int> pilha;
+
+    pilha.push(indAtual);
+
+    while(1)
+    {
+        auto proxIt = std::find(matriz[indAtual].begin(), matriz[indAtual].end(), 1);
+        if (proxIt == matriz[indAtual].end())
+        {
+            while(!pilha.empty())
+            {
+                proxIt = std::find(matriz[pilha.top()].begin(), matriz[pilha.top()].end(), 1);
+                if( proxIt == matriz[pilha.top()].end())
+                {
+                    circuito.push_back(pilha.top());
+                    pilha.pop();
+                    
+                }
+                else
+                {
+                    indAtual = pilha.top();
+                    break;
+                }
+            } 
+            if(pilha.empty())
+            {
+                std::reverse(circuito.begin(), circuito.end());
+                return circuito;
+            }
+        }
+        
+        int indiceProx = std::distance(matriz[indAtual].begin(), proxIt);
+
+        matriz[indAtual][indiceProx] = 0;
+        matriz[indiceProx][indAtual] = 0;
+
+        indAtual = indiceProx;   
+        pilha.push(indAtual);
+
+    }
+    return circuito;
+}
+
+bool Grafo::validaEuleriano()
+{
+    auto matriz = _matriz_adj;
+    auto circuito = getCircuitoEuler();
+    int ind1, ind2;
+
+    if (circuito.empty())
+        return false;
+
+    for (unsigned i = 0; i + 1 < circuito.size(); i++)
+    {
+        ind1 = circuito[i];
+        ind2 = circuito[i+1];
+
+        if (matriz[ind1][ind2] != 1 )
+            return false;
+        matriz[ind1][ind2] = -1;
+        matriz[ind2][ind1] = -1;
+    }
+
+    for(unsigned i = 0; i < matriz.size(); i++)
+    {
+        for (unsigned j = 0; j < matriz[i].size(); ++j) {
+                if(matriz[i][j] != 0 && matriz[i][j] != -1)
+                    return false;
+        }
+    }
+
+    if(circuito[0] != circuito[circuito.size() -1])
+    return false;
+        
+    return true;
+}
 
